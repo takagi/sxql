@@ -213,6 +213,10 @@
   (make-clause :offset offset))
 
 @export
+(defmacro for-update ()
+  `(make-clause :for-update))
+
+@export
 (defmacro set= (&rest args)
   `(make-clause :set= ,@(mapcar #'expand-op args)))
 

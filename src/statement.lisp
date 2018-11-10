@@ -24,7 +24,8 @@
                 :updatability-clause
                 :order-by-clause
                 :limit-clause
-                :offset-clause)
+                :offset-clause
+                :for-update-clause)
   (:import-from :sxql.util
                 :group-by
                 :subdivide)
@@ -58,7 +59,8 @@
                        order-by-clause
                        limit-clause
                        offset-clause
-                       updatability-clause))
+                       updatability-clause
+                       for-update-clause))
       (setf (gethash clause hash) i))
     hash))
 
@@ -88,6 +90,7 @@
                                                                     limit-clause
                                                                     offset-clause
                                                                     updatability-clause
+                                                                    for-update-clause
                                                                   &aux
                                                                     (clause-order
                                                                      (sort-clause-types
@@ -108,7 +111,8 @@
   (order-by-clause nil)
   (limit-clause nil)
   (offset-clause nil)
-  (updatability-clause nil))
+  (updatability-clause nil)
+  (for-update-clause nil))
 
 @export
 (defun compute-select-statement-children (select-statement)
@@ -124,7 +128,8 @@
                                       order-by-clause
                                       limit-clause
                                       offset-clause
-                                      updatability-clause))
+                                      updatability-clause
+                                      for-update-clause))
                    (collect (cons type
                                   (or (position type (select-statement-clause-order select-statement)
                                                 :test #'eq)
@@ -235,7 +240,8 @@
                                   returning-clause
                                   order-by-clause
                                   limit-clause
-                                  offset-clause))
+                                  offset-clause
+                                  for-update-clause))
                (appending
                 (if (or (null defaults)
                         (slot-value statement type))

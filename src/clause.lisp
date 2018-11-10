@@ -69,6 +69,13 @@
   (offset nil :type sql-variable))
 
 @export
+(defstruct (for-update-clause (:include sql-statement (name "FOR UPDATE"))
+                              (:constructor make-for-update-clause ())))
+
+(defmethod yield ((clause for-update-clause))
+  (values "FOR UPDATE" nil))
+
+@export
 (defstruct (group-by-clause (:include expression-list-clause (name "GROUP BY"))
                             (:constructor make-group-by-clause (&rest expressions))))
 
